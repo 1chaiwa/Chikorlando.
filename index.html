@@ -263,69 +263,25 @@ function initDB() {
     //function initDB() {
 
     // Menu CRUD Operations
-    async function loadMenuFromDB() {
-        if (!db) return;
-        const tx = db.transaction(['menu'], 'readonly');
-        const store = tx.objectStore('menu');
-        const savedMenu = await new Promise((resolve) => {
-            store.getAll().onsuccess = (e) => resolve(e.target.result || []);
-        });
-        if (savedMenu.length > 0) {
-            menu = savedMenu;
-        }
-        renderMenu();
-        if (currentAdmin) renderAdminMenu();
-        const menuCountElem = document.getElementById('menuItemsCount');
-        if (menuCountElem) menuCountElem.innerHTML = menu.length;
-    }
-
-    async function saveMenuToDB() {
-        if (!db) return;
-        const tx = db.transaction(['menu'], 'readwrite');
-        const store = tx.objectStore('menu');
-        store.clear();
-        menu.forEach(item => {
-            store.add(item);
-        });
-    }
-
-    async function addMenuItem(item) {
-        const newId = menu.length > 0 ? Math.max(...menu.map(i => i.id)) + 1 : 1;
-        const newItem = { ...item, id: newId };
-        menu.push(newItem);
+   async function loadMenuFromDB() {
+    if (!db) return;
+    const tx = db.transaction(['menu'], 'readonly');
+    const store = tx.objectStore('menu');
+    const savedMenu = await new Promise((resolve) => {
+        store.getAll().onsuccess = (e) => resolve(e.target.result || []);
+    });
+    if (savedMenu.length > 0) {
+        menu = savedMenu;
+    } else {
+        // If no menu in DB, save the default menu
         await saveMenuToDB();
-        renderMenu();
-        if (currentAdmin) renderAdminMenu();
-        showToast(`✅ Added: ${item.name}`);
-        const menuCountElem = document.getElementById('menuItemsCount');
-        if (menuCountElem) menuCountElem.innerHTML = menu.length;
+        console.log('Default menu saved to database');
     }
-
-    async function updateMenuItem(id, updatedItem) {
-        const index = menu.findIndex(i => i.id === id);
-        if (index !== -1) {
-            menu[index] = { ...menu[index], ...updatedItem, id: id };
-            await saveMenuToDB();
-            renderMenu();
-            if (currentAdmin) renderAdminMenu();
-            showToast(`✅ Updated: ${updatedItem.name}`);
-        } else {
-            showToast('❌ Item not found');
-        }
-    }
-
-    async function deleteMenuItem(id) {
-        if (confirm('Are you sure you want to delete this item?')) {
-            menu = menu.filter(i => i.id !== id);
-            await saveMenuToDB();
-            renderMenu();
-            if (currentAdmin) renderAdminMenu();
-            showToast('🗑️ Item deleted');
-            const menuCountElem = document.getElementById('menuItemsCount');
-            if (menuCountElem) menuCountElem.innerHTML = menu.length;
-        }
-    }
-
+    renderMenu();
+    if (currentAdmin) renderAdminMenu();
+    const menuCountElem = document.getElementById('menuItemsCount');
+    if (menuCountElem) menuCountElem.innerHTML = menu.length;
+}
     // Render Menu for Customers
     function renderMenu() {
         const container = document.getElementById('menuGrid');
