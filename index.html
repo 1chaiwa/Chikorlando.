@@ -237,17 +237,16 @@
 
 <script>
     // ============ FIXED MENU WITH WORKING IMAGES ============
-    let menu = [
-        { id: 1, name: "Nshima with Chicken", description: "Traditional nshima + grilled chicken + rape", price: 45, image: "https://i.imgur.com/7ZqFq6R.jpg" },
-        { id: 2, name: "Beef Burger", description: "Zambian beef patty with chips", price: 35, image: "https://i.imgur.com/8YqGq7S.jpg" },
-        { id: 3, name: "Pizza Special", description: "Loaded with sausage, peppers & cheese", price: 60, image: "https://i.imgur.com/9XqHq8T.jpg" },
-        { id: 4, name: "Fried Bream", description: "Fresh bream fish with nshima", price: 50, image: "https://i.imgur.com/6WpFq5R.jpg" },
-        { id: 5, name: "Vegetable Rice", description: "Rice with mixed vegetables", price: 30, image: "https://i.imgur.com/5VqGq4Q.jpg" },
-        { id: 6, name: "Chicken Wings", description: "Spicy grilled wings + chips", price: 40, image: "https://i.imgur.com/4XqHq3P.jpg" },
-        { id: 7, name: "Breakfast Roll", description: "Egg, sausage, cheese roll", price: 25, image: "https://i.imgur.com/3YqGq2O.jpg" },
-        { id: 8, name: "Chibuku Shake", description: "Traditional maheu shake", price: 10, image: "https://i.imgur.com/2ZqHq1N.jpg" },
-        { id: 9, name: "Coca Cola", description: "Chilled soft drink", price: 12, image: "https://i.imgur.com/1XqHq0M.jpg" }
-    ];
+   let menu = [
+    { id: 1, name: "Nshima with Chicken", description: "Traditional nshima + grilled chicken", price: 45, image: "https://i.imgur.com/7ZqFq6R.jpg" },
+    { id: 2, name: "Beef Burger", description: "Zambian beef patty with chips", price: 35, image: "https://i.imgur.com/8YqGq7S.jpg" },
+    // ... all your other menu items
+];
+
+// Then define initDB()
+function initDB() {
+    // ... rest of the code
+}
 
     let db;
     let cart = [];
