@@ -261,38 +261,7 @@
     const KASAMA_CENTER = [-10.2129, 31.1809];
     const ADMIN_PASSWORD = "admin123";
 
-    // Initialize Database
-    function initDB() {
-        const request = indexedDB.open('ChikorlandoFoodDB', 5);
-        request.onerror = () => console.log('DB error');
-        request.onsuccess = (e) => {
-            db = e.target.result;
-            console.log('Database ready');
-            loadMenuFromDB();
-            loadDeliveryGirls();
-            loadAvailableOrders();
-            loadMyDeliveries();
-            if (currentAdmin) loadAllOrdersAdmin();
-        };
-        request.onupgradeneeded = (e) => {
-            db = e.target.result;
-            if (!db.objectStoreNames.contains('orders')) {
-                db.createObjectStore('orders', { keyPath: 'id', autoIncrement: true });
-            }
-            if (!db.objectStoreNames.contains('deliveryGirls')) {
-                db.createObjectStore('deliveryGirls', { keyPath: 'id', autoIncrement: true });
-                // Add default delivery girl
-                const girlStore = db.objectStore('deliveryGirls');
-                girlStore.add({ name: "Laura", pin: "1234", createdAt: new Date().toISOString() });
-            }
-            if (!db.objectStoreNames.contains('menu')) {
-                const menuStore = db.createObjectStore('menu', { keyPath: 'id', autoIncrement: true });
-                menu.forEach(item => {
-                    menuStore.add(item);
-                });
-            }
-        };
-    }
+    //function initDB() {
 
     // Menu CRUD Operations
     async function loadMenuFromDB() {
